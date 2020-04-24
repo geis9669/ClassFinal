@@ -5,6 +5,89 @@ import java.util.*;
 
 public class UmlInfoMethods {
 
+    public static String getClassInfo(String className)
+    {
+        String classInfo = "";
+
+        try
+        {
+            Class cl = Class.forName(className);
+            Class supercl = cl.getSuperclass();
+            classInfo = ("class " + className);
+            if(supercl != null && supercl != Object.class)
+            {
+                classInfo += (" extends " + supercl.getName());
+                //classInfo += "\n" +getClassInfo(supercl.getName());
+            }
+            classInfo += "\n{\n";
+            classInfo += getConstructors(cl);
+            classInfo += "\n";
+            classInfo += getMethods(cl);
+            classInfo += "\n";
+            classInfo += getFields(cl);
+            classInfo += "}"+"\n";
+        }
+        catch(ClassNotFoundException exception)
+        {
+            return "could not find the entered class, make sure its all spelled correctly\n";
+//            exception.printStackTrace();
+        }
+
+        return classInfo;
+    }
+
+    /**
+     *
+     * @param className
+     * @param options the first is for constructors, next methods, data members
+     * @return
+     */
+    public static String getClassInfo(String className, boolean[] options)
+    {
+        String classInfo = "";
+        if(options.length != 3)
+        {
+            options = new boolean[3];
+            for(int i = 0 ; i<options.length; i ++)
+            {
+                options[i] = true;
+            }
+        }
+
+        try
+        {
+            Class cl = Class.forName(className);
+            Class supercl = cl.getSuperclass();
+            classInfo = ("class " + className);
+            if(supercl != null && supercl != Object.class)
+            {
+                classInfo += (" extends " + supercl.getName());
+                //classInfo += "\n" +getClassInfo(supercl.getName());
+            }
+            classInfo += "\n{\n";
+            if(options[0]) {
+                classInfo += getConstructors(cl);
+            }
+            classInfo += "\n";
+            if(options[1]) {
+                classInfo += getMethods(cl);
+            }
+            classInfo += "\n";
+            if(options[2]){
+                classInfo += getFields(cl);
+            }
+            classInfo += "}"+"\n";
+        }
+        catch(ClassNotFoundException exception)
+        {
+            return "could not find the entered class, make sure its all spelled correctly\n";
+//            exception.printStackTrace();
+        }
+
+        return classInfo;
+    }
+
+
     /**
      *
      * @param cl a class
