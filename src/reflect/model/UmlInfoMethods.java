@@ -203,65 +203,6 @@ public class UmlInfoMethods {
         return (Executable[]) combineArrays((Executable[]) combineArrays( sortByParameters(firstArray), middle), sortByParameters(lastArray));
     }
 
-    /**
-     * sorts an executable list by using the get name method
-     * @param list list to be sorted
-     * @return the sorted list in alphabetical order for the English alphabet
-     */
-    private static Executable[] sortByName(Executable[] list) {
-        if (list.length <= 1) 
-            return list;
-        
-        int half = list.length / 2;
-        Executable[] first = new Executable[half];
-        Executable[] second = new Executable[half + (list.length % 2)];
-        for (int index = 0; index < list.length; index++) 
-            if (index < half) 
-                first[index] = list[index];
-            else 
-                second[index - half] = list[index];
-        first = sortByName(first);
-        second = sortByName(second);
-
-        int indexList = 0;
-        int indexFirst = 0;
-        int indexSecond = 0;
-        while(indexList < list.length)
-        {
-            if(indexFirst >= first.length)
-            {
-                list[indexList] = second[indexSecond];
-                indexSecond++;
-            }
-            else if(indexSecond >= second.length)
-            {
-                list[indexList] = first[indexFirst];
-                indexFirst++;
-            }
-            else
-            {
-                if (first[indexFirst].getName().compareTo(second[indexSecond].getName()) < 0) 
-                {
-                    list[indexList] = first[indexFirst];
-                    indexFirst++;
-                } 
-                else if (first[indexFirst].getName().compareTo(second[indexSecond].getName()) > 0) 
-                {
-                    list[indexList] = second[indexSecond];
-                    indexSecond++;
-                }
-                else
-                {
-                    list[indexList] = first[indexFirst];
-                    indexFirst++;
-                    indexList++;
-                    list[indexList] = second[indexSecond];
-                    indexSecond++;
-                }
-            }
-            indexList++;
-        }
-        return list;
     }
 
     /**
