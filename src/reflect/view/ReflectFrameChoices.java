@@ -17,7 +17,7 @@ public class ReflectFrameChoices extends JFrame
         this.setTitle("Reflection");
         this.setResizable(true);
         this.setMinimumSize(new Dimension(100,100));
-        this.setSize(800,800);
+        this.setSize(600,600);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 

@@ -203,13 +203,18 @@ public class UmlInfoMethods {
         return (Executable[]) combineArrays((Executable[]) combineArrays( sortByParameters(firstArray), middle), sortByParameters(lastArray));
     }
 
+    /**
+     * sorts an executable list by using the get name method
+     * @param list list to be sorted
+     * @return the sorted list in alphabetical order for the English alphabet
+     */
     private static Executable[] sortByName(Executable[] list) {
         if (list.length <= 1) 
             return list;
+        
         int half = list.length / 2;
-        Executable[] first = new Executable[half];//list.length/2];
-        Executable[] second = new Executable[half + list.length % 2];
-        //splits the array in half
+        Executable[] first = new Executable[half];
+        Executable[] second = new Executable[half + (list.length % 2)];
         for (int index = 0; index < list.length; index++) 
             if (index < half) 
                 first[index] = list[index];
@@ -218,7 +223,6 @@ public class UmlInfoMethods {
         first = sortByName(first);
         second = sortByName(second);
 
-        // compare the lists and make them one in the correct order.
         int indexList = 0;
         int indexFirst = 0;
         int indexSecond = 0;

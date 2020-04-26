@@ -14,4 +14,7 @@ public class UmlController {
 	public String getClassInfo(String className, boolean[] options) {
 		return UmlInfoMethods.getClassInfo(className, options);
 	}
+	
+	// have it be able to sort info by modifiers then name
+	// how to make code to do this
 }
