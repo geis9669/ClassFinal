@@ -95,7 +95,8 @@ public class UmlInfoMethods {
      */
     public static String getConstructors(Class cl)
     {
-        Object[] constructors = sortByParameters(cl.getDeclaredConstructors());
+    	SortBy<Executable> sort = (a,b) -> a.getParameterCount()<=b.getParameterCount();
+        Object[] constructors = sortList(cl.getDeclaredConstructors(),sort);
         String message = "";
 
         for(int place = 0; place < constructors.length; place++)
@@ -125,11 +126,13 @@ public class UmlInfoMethods {
      */
     public static String getMethods(Class cl)
     {
-        Method[] methods = (Method[]) sortByName(cl.getDeclaredMethods());
+    	SortBy<Executable> sort = (a,b) ->a.getName().compareTo(b.getName()) < 0;
+        Object[] methods = sortList(cl.getDeclaredMethods(), sort);
         String message = "";
-
-        for(Method method : methods)
+        
+        for(int place = 0; place < methods.length; place++)
         {
+        	Method method = (Method) methods[place];
             Class returnType = method.getReturnType();
             String name = method.getName();
 
@@ -175,7 +178,7 @@ public class UmlInfoMethods {
      * @return the sorted array, or an array of size 0 if the list is not of type Executable,
      *  or the list if its size is less then or equal to 1
      */
-    private static Executable[] sortByParameters(Executable[] list)
+    private static Executable[] sortList(Executable[] list, SortBy sort)
     {
         if(list.length <= 1)
         {
@@ -187,9 +190,9 @@ public class UmlInfoMethods {
 
         for (int index = 1; index < list.length; index++) {
             Executable current = list[index];
-            if (current.getParameterCount() <= pivot.getParameterCount()) {
+            if (sort.sortBy(current, pivot)) {
                 first.add(current);
-            } else if (current.getParameterCount() > pivot.getParameterCount()) {
+            } else {
                 last.add(current);
             }
         }
@@ -200,9 +203,7 @@ public class UmlInfoMethods {
         first.toArray(firstArray);
         lastArray = last.toArray(lastArray);
 
-        return (Executable[]) combineArrays((Executable[]) combineArrays( sortByParameters(firstArray), middle), sortByParameters(lastArray));
-    }
-
+        return (Executable[]) combineArrays((Executable[]) combineArrays(sortList(firstArray,sort), middle), sortList(lastArray,sort));
     }
 
     /**
