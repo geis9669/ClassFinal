@@ -45,7 +45,7 @@ public class UmlInfoMethods {
     public static String getClassInfo(String className, boolean[] options)
     {
         String classInfo = "";
-        if(options.length != 3)
+        if(options == null || options.length != 3)
         {
             options = new boolean[3];
             for(int i = 0 ; i<options.length; i ++)
