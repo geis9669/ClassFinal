@@ -96,7 +96,7 @@ public class UmlInfoMethods {
     public static String getConstructors(Class cl)
     {
     	SortBy<Executable> sort = (a,b) -> a.getParameterCount()<=b.getParameterCount();
-        Object[] constructors = sortList(cl.getDeclaredConstructors(),sort);
+        Object[] constructors = (Object[]) sortList(cl.getDeclaredConstructors(),sort);
         String message = "";
 
         for(int place = 0; place < constructors.length; place++)
@@ -126,8 +126,8 @@ public class UmlInfoMethods {
      */
     public static String getMethods(Class cl)
     {
-    	SortBy<Executable> sort = (a,b) ->a.getName().compareTo(b.getName()) < 0;
-        Object[] methods = sortList(cl.getDeclaredMethods(), sort);
+    	SortBy<Executable> sort = (a,b) -> a.getName().compareTo(b.getName()) < 0;
+        Object[] methods = (Object[]) sortList(cl.getDeclaredMethods(), sort);
         String message = "";
         
         for(int place = 0; place < methods.length; place++)
@@ -178,32 +178,32 @@ public class UmlInfoMethods {
      * @return the sorted array, or an array of size 0 if the list is not of type Executable,
      *  or the list if its size is less then or equal to 1
      */
-    private static Executable[] sortList(Executable[] list, SortBy sort)
+    private static <T> T[] sortList(T[] list, SortBy<T> sort)
     {
         if(list.length <= 1)
         {
             return list;
         }
-        Executable pivot = list[0];
-        List<Executable> first = new ArrayList<>();
-        List<Executable> last = new ArrayList<>();
+        T pivot = list[0];
+        List<T> first = new ArrayList<>();
+        List<T> last = new ArrayList<>();
 
         for (int index = 1; index < list.length; index++) {
-            Executable current = list[index];
+            T current = list[index];
             if (sort.sortBy(current, pivot)) {
                 first.add(current);
             } else {
                 last.add(current);
             }
         }
-        Executable[] middle = {pivot};
-
-        Executable[] firstArray = new Executable[first.size()];
-        Executable[] lastArray = new Executable[last.size()];
+        T[] middle = (T[]) new Object[1]; 
+        middle[0] = pivot;
+        T[] firstArray = (T[]) new Object[first.size()];
+        T[] lastArray = (T[]) new Object[last.size()];
         first.toArray(firstArray);
         lastArray = last.toArray(lastArray);
 
-        return (Executable[]) combineArrays((Executable[]) combineArrays(sortList(firstArray,sort), middle), sortList(lastArray,sort));
+        return (T[]) combineArrays((Object[]) combineArrays(sortList(firstArray,sort), middle), sortList(lastArray,sort));
     }
 
     /**
