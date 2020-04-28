@@ -128,7 +128,7 @@ public class UmlInfoMethods {
     {
     	SortBy<Executable> sort = (a,b) -> a.getName().compareTo(b.getName()) ;
     	SortBy<Executable> nextSort = (a,b) -> a.getParameterCount()-b.getParameterCount();
-        Object[] methods = (Object[]) sortList(cl.getDeclaredMethods(), sort,nextSort);
+        Method[] methods = (Method[]) sortList(cl.getDeclaredMethods(), sort,nextSort);
         String message = "";
         
         for(int place = 0; place < methods.length; place++)
@@ -161,7 +161,7 @@ public class UmlInfoMethods {
     public static String getFields(Class cl)
     {
     	SortBy<Field> sort = (a,b) -> a.getName().compareTo(b.getName());
-        Object[] fields = (Object[]) sortList(cl.getDeclaredFields(),sort);
+        Field[] fields = (Field[]) sortList(cl.getDeclaredFields(),sort);
         String message = "";
 
         for(int place = 0; place < fields.length; place++)
@@ -222,10 +222,11 @@ public class UmlInfoMethods {
             	}
         	}
         }
-        T[] middle = (T[]) new Object[1]; 
+        Class listClass = list.getClass().getComponentType();
+        T[] middle = (T[]) Array.newInstance(listClass, 1); 
         middle[0] = pivot;
-        T[] firstArray = (T[]) new Object[first.size()];
-        T[] lastArray = (T[]) new Object[last.size()];
+        T[] firstArray = (T[]) Array.newInstance(listClass, first.size());
+        T[] lastArray = (T[]) Array.newInstance(listClass, last.size());
         first.toArray(firstArray);
         lastArray = last.toArray(lastArray);
 
