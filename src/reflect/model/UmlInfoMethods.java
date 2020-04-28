@@ -176,41 +176,13 @@ public class UmlInfoMethods {
     }
 
     /**
-     * Sorts a list that is of type Executable
-     * @param list the list you want sorted
-     * @return the sorted array, or an array of size 0 if the list is not of type Executable,
-     *  or the list if its size is less then or equal to 1
+     * this sorts a list by the operations in the first sort and innersorts
+     * @param <T> the type of array to be sorted
+     * @param list the list to be sorted
+     * @param firstSort the first sort to be applied to the list
+     * @param innerSorts sort by first sort then by inner going one deeper for each time they are the same
+     * @return the sorted list as an ObjectArray
      */
-    /*
-    private static <T> T[] sortList(T[] list, SortBy<T> sort)
-    {
-        if(list.length <= 1)
-        {
-            return list;
-        }
-        T pivot = list[0];
-        List<T> first = new ArrayList<>();
-        List<T> last = new ArrayList<>();
-
-        for (int index = 1; index < list.length; index++) {
-            T current = list[index];
-            if (sort.sortBy(current, pivot)) {
-                first.add(current);
-            } else {
-                last.add(current);
-            }
-        }
-        T[] middle = (T[]) new Object[1]; 
-        middle[0] = pivot;
-        T[] firstArray = (T[]) new Object[first.size()];
-        T[] lastArray = (T[]) new Object[last.size()];
-        first.toArray(firstArray);
-        lastArray = last.toArray(lastArray);
-
-        return (T[]) combineArrays((T[]) combineArrays(sortList(firstArray,sort), middle), sortList(lastArray,sort));
-    }
-    */
-
     private static <T> T[] sortList(T[] list, SortBy<T> firstSort, SortBy<T>... innerSorts)
     {
     	SortBy<T>[] nextList = (SortBy<T>[]) Array.newInstance(innerSorts.getClass().getComponentType(), innerSorts.length+1);
