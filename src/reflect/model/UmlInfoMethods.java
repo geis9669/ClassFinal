@@ -95,7 +95,7 @@ public class UmlInfoMethods {
      */
     public static String getConstructors(Class cl)
     {
-    	SortBy<Executable> sort = (a,b) -> a.getParameterCount()<=b.getParameterCount();
+    	SortBy<Executable> sort = (a,b) -> a.getParameterCount()-b.getParameterCount();
         Object[] constructors = (Object[]) sortList(cl.getDeclaredConstructors(),sort);
         String message = "";
 
@@ -126,7 +126,7 @@ public class UmlInfoMethods {
      */
     public static String getMethods(Class cl)
     {
-    	SortBy<Executable> sort = (a,b) -> a.getName().compareTo(b.getName()) < 0;
+    	SortBy<Executable> sort = (a,b) -> a.getName().compareTo(b.getName()) ;
         Object[] methods = (Object[]) sortList(cl.getDeclaredMethods(), sort);
         String message = "";
         
@@ -159,7 +159,7 @@ public class UmlInfoMethods {
      */
     public static String getFields(Class cl)
     {
-    	SortBy<Field> sort = (a,b) -> a.getName().compareTo(b.getName()) < 0;
+    	SortBy<Field> sort = (a,b) -> a.getName().compareTo(b.getName());
         Object[] fields = (Object[]) sortList(cl.getDeclaredFields(),sort);
         String message = "";
 
@@ -180,6 +180,7 @@ public class UmlInfoMethods {
      * @return the sorted array, or an array of size 0 if the list is not of type Executable,
      *  or the list if its size is less then or equal to 1
      */
+    /*
     private static <T> T[] sortList(T[] list, SortBy<T> sort)
     {
         if(list.length <= 1)
@@ -207,7 +208,55 @@ public class UmlInfoMethods {
 
         return (T[]) combineArrays((T[]) combineArrays(sortList(firstArray,sort), middle), sortList(lastArray,sort));
     }
+    */
 
+    private static <T> T[] sortList(T[] list, SortBy<T> firstSort, SortBy<T>... innerSorts)
+    {
+    	Object[] nextList = new Object[innerSorts.length+2];
+    	nextList[0] = firstSort;
+    	SortBy<T> lastSort = (a,b) -> -1;
+    	nextList[nextList.length-1] = lastSort;
+    	for(int index = 0; index<innerSorts.length ; index++)
+    	{
+    		nextList[index+1] = innerSorts[index];
+    	}
+    	return sortList(list, innerSorts);
+    }
+    
+    private static <T> T[] sortList(T[] list, SortBy<T>[] sorts)
+    {
+        if(list.length <= 1)
+        {
+            return list;
+        }
+        T pivot = list[0];
+        List<T> first = new ArrayList<>();
+        List<T> last = new ArrayList<>();
+        for (int index = 1; index < list.length; index++) {
+        	T current = list[index];
+            int same = 0;
+            int time = 0;
+        	while(same == 0) {// need to make it so it will sort on many different levels      		
+            	same = sorts[time].sortBy(current, pivot);
+            	time++;
+            	if(same<0) {
+                	first.add(current);
+            	} 
+            	if(same> 0) {
+                	last.add(current);
+            	}
+        	}
+        }
+        T[] middle = (T[]) new Object[1]; 
+        middle[0] = pivot;
+        T[] firstArray = (T[]) new Object[first.size()];
+        T[] lastArray = (T[]) new Object[last.size()];
+        first.toArray(firstArray);
+        lastArray = last.toArray(lastArray);
+
+        return (T[]) combineArrays((T[]) combineArrays(sortList(firstArray,sorts), middle), sortList(lastArray,sorts));
+    }
+    
     /**
      * combines two arrays after making sure they are the same type. 
      * adds the second array to the first array
