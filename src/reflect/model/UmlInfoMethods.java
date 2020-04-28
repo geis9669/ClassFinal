@@ -159,11 +159,13 @@ public class UmlInfoMethods {
      */
     public static String getFields(Class cl)
     {
-        Field[] fields = cl.getDeclaredFields();
+    	SortBy<Field> sort = (a,b) -> a.getName().compareTo(b.getName()) < 0;
+        Object[] fields = (Object[]) sortList(cl.getDeclaredFields(),sort);
         String message = "";
 
-        for(Field f: fields)
+        for(int place = 0; place < fields.length; place++)
         {
+        	Field f = (Field) fields[place];
             Class type = f.getType();
             String name = f.getName();
             message += "    " + Modifier.toString(f.getModifiers());
@@ -203,7 +205,7 @@ public class UmlInfoMethods {
         first.toArray(firstArray);
         lastArray = last.toArray(lastArray);
 
-        return (T[]) combineArrays((Object[]) combineArrays(sortList(firstArray,sort), middle), sortList(lastArray,sort));
+        return (T[]) combineArrays((T[]) combineArrays(sortList(firstArray,sort), middle), sortList(lastArray,sort));
     }
 
     /**
