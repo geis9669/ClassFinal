@@ -127,7 +127,8 @@ public class UmlInfoMethods {
     public static String getMethods(Class cl)
     {
     	SortBy<Executable> sort = (a,b) -> a.getName().compareTo(b.getName()) ;
-        Object[] methods = (Object[]) sortList(cl.getDeclaredMethods(), sort);
+    	SortBy<Executable> nextSort = (a,b) -> a.getParameterCount()-b.getParameterCount();
+        Object[] methods = (Object[]) sortList(cl.getDeclaredMethods(), sort,nextSort);
         String message = "";
         
         for(int place = 0; place < methods.length; place++)
@@ -212,15 +213,13 @@ public class UmlInfoMethods {
 
     private static <T> T[] sortList(T[] list, SortBy<T> firstSort, SortBy<T>... innerSorts)
     {
-    	Object[] nextList = new Object[innerSorts.length+2];
+    	SortBy<T>[] nextList = (SortBy<T>[]) Array.newInstance(innerSorts.getClass().getComponentType(), innerSorts.length+1);
     	nextList[0] = firstSort;
-    	SortBy<T> lastSort = (a,b) -> -1;
-    	nextList[nextList.length-1] = lastSort;
     	for(int index = 0; index<innerSorts.length ; index++)
     	{
     		nextList[index+1] = innerSorts[index];
     	}
-    	return sortList(list, innerSorts);
+    	return sortList(list, nextList);
     }
     
     private static <T> T[] sortList(T[] list, SortBy<T>[] sorts)
@@ -237,8 +236,12 @@ public class UmlInfoMethods {
             int same = 0;
             int time = 0;
         	while(same == 0) {// need to make it so it will sort on many different levels      		
-            	same = sorts[time].sortBy(current, pivot);
-            	time++;
+            	if(time < sorts.length) {
+            		same = sorts[time].sortBy(current, pivot);
+            		time++;
+            	}else {
+            		same = -1;
+            	}
             	if(same<0) {
                 	first.add(current);
             	} 
