@@ -15,6 +15,27 @@ public class UmlController {
 		return UmlInfoMethods.getClassInfo(className, options);
 	}
 	
+	public void something()
+	{
+		String className = "java.util.ArrayList";
+		String[] includeWords;// has to have this some where in it
+		String[] excludeWords;// can't have this some where in it
+		SortBy[] sorts ; // how to sort the lists
+		
+		boolean[] modifiers; // public, static , final, none
+		
+		String[] returnType; 
+		
+		try
+		{
+			
+		}
+		catch(Exception e)
+		{
+			
+		}
+	}
+	
 	
 	public void start()
 	{
