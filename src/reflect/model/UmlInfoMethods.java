@@ -1,7 +1,6 @@
 package reflect.model;
 
 import java.lang.reflect.*;
-import java.util.*;
 
 public class UmlInfoMethods {
 
