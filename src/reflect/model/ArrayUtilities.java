@@ -46,7 +46,7 @@ public class ArrayUtilities {
         	T current = array[index];
             int same = 0;
             int time = 0;
-        	while(same == 0) {// need to make it so it will sort on many different levels      		
+        	while(same == 0) {	
             	if(time < sorts.length) {
             		same = sorts[time].sortBy(current, pivot);
             		time++;
