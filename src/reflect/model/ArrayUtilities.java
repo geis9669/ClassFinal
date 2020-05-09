@@ -26,17 +26,24 @@ public class ArrayUtilities {
     	return sortList(list, nextList);
     }
     
-    public static <T> T[] sortList(T[] list, SortBy<T>[] sorts)
+    /**
+     * this sorts a list by the operations in the sorts array starting with the first item until one is not equal
+     * @param <T> the type of array to be sorted
+     * @param array the array to be sorted
+     * @param sorts sorts by first item in sorts then by inner going one deeper for each time they are the same
+     * @return the sorted list as an ObjectArray
+     */
+    public static <T> T[] sortList(T[] array, SortBy<T>[] sorts)
     {
-        if(list.length <= 1)
+        if(array.length <= 1)
         {
-            return list;
+            return array;
         }
-        T pivot = list[0];
+        T pivot = array[0];
         List<T> first = new ArrayList<>();
         List<T> last = new ArrayList<>();
-        for (int index = 1; index < list.length; index++) {
-        	T current = list[index];
+        for (int index = 1; index < array.length; index++) {
+        	T current = array[index];
             int same = 0;
             int time = 0;
         	while(same == 0) {// need to make it so it will sort on many different levels      		
@@ -54,11 +61,11 @@ public class ArrayUtilities {
             	}
         	}
         }
-        Class listClass = list.getClass().getComponentType();
-        T[] middle = (T[]) Array.newInstance(listClass, 1); 
+        Class arrayClass = array.getClass().getComponentType();
+        T[] middle = (T[]) Array.newInstance(arrayClass, 1); 
         middle[0] = pivot;
-        T[] firstArray = (T[]) Array.newInstance(listClass, first.size());
-        T[] lastArray = (T[]) Array.newInstance(listClass, last.size());
+        T[] firstArray = (T[]) Array.newInstance(arrayClass, first.size());
+        T[] lastArray = (T[]) Array.newInstance(arrayClass, last.size());
         first.toArray(firstArray);
         lastArray = last.toArray(lastArray);
 
@@ -68,23 +75,23 @@ public class ArrayUtilities {
     /**
      * combines two arrays after making sure they are the same type. 
      * adds the second array to the first array
-     * @param firstList the list that is first in the new list
+     * @param firstArray the list that is first in the new list
      * @param lastList the list that starts after the first list
      * @return the new list as an object which needs to be cast or a Object array with 0 elements
      */
-    public static Object combineArrays(Object[] firstList, Object[] lastList)
+    public static Object combineArrays(Object[] firstArray, Object[] lastList)
     {
-        Class cl1 = firstList.getClass();
+        Class cl1 = firstArray.getClass();
         Class cl2 = lastList.getClass();
         Class componentType1 = cl1.getComponentType();
 
         //cl1.isInstance(cl2)
         if(cl1.getComponentType().getName().contentEquals(cl2.getComponentType().getName()))
         {
-            int newLength = firstList.length + lastList.length;
+            int newLength = firstArray.length + lastList.length;
             Object newArray = Array.newInstance(componentType1, newLength);
-            System.arraycopy(firstList, 0, newArray,0,firstList.length);
-            System.arraycopy(lastList, 0, newArray, firstList.length, lastList.length);
+            System.arraycopy(firstArray, 0, newArray,0,firstArray.length);
+            System.arraycopy(lastList, 0, newArray, firstArray.length, lastList.length);
 
             return newArray;
         }
@@ -96,11 +103,10 @@ public class ArrayUtilities {
     }
     
     /**
-     * combines two arrays after making sure they are the same type. 
-     * adds the second array to the first array
-     * @param firstList the list that is first in the new list
-     * @param lastList the list that starts after the first list
-     * @return the new list as an object which needs to be cast or a Object array with 0 elements
+     * combines two arrays with the second after the first. 
+     * @param firstArray the array that is first in the new array
+     * @param lastArray the array that starts after the first array
+     * @return the new array as an object which needs to be cast or a Object array with 0 elements
      */
     public static <T> T[] combineArraysg(T[] firstArray, T[] secondArray)
     {
