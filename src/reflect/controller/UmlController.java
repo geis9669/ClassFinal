@@ -36,6 +36,12 @@ public class UmlController {
 		}
 	}
 	
+	public void handleErrors(Exception error)
+	{
+		error.printStackTrace();
+	}
+	
+	
 	
 	public void start()
 	{
