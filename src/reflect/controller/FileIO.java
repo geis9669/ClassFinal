@@ -39,4 +39,51 @@ public class FileIO {
 			app.handleErrors(genericError);
 		}
 	}
+	
+	/**
+	 * saves a object to a file to the current directory
+	 * @param app the controller of this program
+	 * @param datafile name of the save file
+	 * @param object the object being saved
+	 */
+	public static void saveData(UmlController app, String datafile, Serializable object)
+	{
+		try(FileOutputStream saveStream = new FileOutputStream(datafile);
+				ObjectOutputStream output = new ObjectOutputStream(saveStream))
+		{
+			output.writeObject(object);
+		}
+		catch(IOException error)
+		{
+			app.handleErrors(error);
+		}
+	}
+	
+	/**
+	 * loads an object from the current directory
+	 * @param app the controller of this program
+	 * @param datafile name of the file to load
+	 * @return the object that needs to be cast could be null
+	 */
+	public static Object loadData(UmlController app, String datafile)
+	{
+		try(FileInputStream loadStream = new FileInputStream(datafile);
+				ObjectInputStream input = new ObjectInputStream(loadStream))
+		{
+			return input.readObject();
+		}
+		catch(IOException error)
+		{
+			app.handleErrors(error);
+		} 
+		catch (ClassNotFoundException error) 
+		{
+			app.handleErrors(error);
+		}
+		catch(Exception error)
+		{
+			app.handleErrors(error);
+		}
+		return null;
+	}
 }
