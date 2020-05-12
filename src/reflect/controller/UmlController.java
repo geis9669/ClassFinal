@@ -11,6 +11,16 @@ public class UmlController {
 		this.gui = new ReflectFrameChoices(this);
 	}
 	
+	/**
+	 * This is the method to call when you want to close the project
+	 */
+	public void closeApplication()
+	{
+		FileIO.saveData(this, datafile, pastClasses);
+		
+		System.exit(0);
+	}
+	
 	public String getClassInfo(String className, boolean[] options) {
 		return UmlInfoMethods.getClassInfo(className, options);
 	}
