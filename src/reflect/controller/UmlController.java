@@ -50,6 +50,17 @@ public class UmlController {
 	}
 	
 	public String getClassInfo(String className, boolean[] options) {
+		
+		try
+		{
+			Class cl = Class.forName(className);
+			pastClasses.add(cl);
+		}
+		catch(ClassNotFoundException e)
+		{
+			
+		}
+		
 		return UmlInfoMethods.getClassInfo(className, options);
 	}
 	
