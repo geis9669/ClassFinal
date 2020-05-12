@@ -21,8 +21,13 @@ public class UmlController {
 	public UmlController()
 	{
 		datafile = "pastClasses.reflect";
-		pastClasses = new ArrayList<Class>();
-		pastClasses = (ArrayList<Class>) FileIO.loadData(this, datafile);
+		try {
+			pastClasses = (ArrayList<Class>) FileIO.loadData(this, datafile);
+		}
+		catch(Exception error)
+		{
+			pastClasses = new ArrayList<Class>();
+		}
 		this.gui = new ReflectFrameChoices(this);
 	}
 	
