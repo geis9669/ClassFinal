@@ -65,7 +65,7 @@ public class FileIO {
 	 * @param datafile name of the file to load
 	 * @return the object that needs to be cast could be null
 	 */
-	public static Object loadData(UmlController app, String datafile) throws IOException, ClassNotFoundException, Exception
+	public static Object loadData(UmlController app, String datafile) throws IOException, ClassNotFoundException
 	{
 		try(FileInputStream loadStream = new FileInputStream(datafile);
 				ObjectInputStream input = new ObjectInputStream(loadStream))
