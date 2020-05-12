@@ -173,5 +173,19 @@ public class UmlInfoMethods {
         }
         return message;
     }
+    
+    public static String formatsFields(Field[] fields)
+    {
+    	String message = "";
+    	for(int place = 0; place < fields.length; place++)
+        {
+        	Field f = (Field) fields[place];
+            Class type = f.getType();
+            String name = f.getName();
+            message += "    " + Modifier.toString(f.getModifiers());
+            message += " " + type.getName()+ " " + name+ ";\n";
+        }
+    	return message;
+    }
 
 }
