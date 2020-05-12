@@ -1,13 +1,28 @@
 package reflect.controller;
 
+import java.util.ArrayList;
 import reflect.model.*;
 import reflect.view.*;
 
+/**
+ * sets up and destroy the application
+ * @author Greg
+ *
+ */
 public class UmlController {
+	private String datafile;
+	private ArrayList<Class> pastClasses;
+	
 	private ReflectFrameChoices gui;
 	
+	/**
+	 * sets up the entire application
+	 */
 	public UmlController()
 	{
+		datafile = "pastClasses.reflect";
+		pastClasses = new ArrayList<Class>();
+		pastClasses = (ArrayList<Class>) FileIO.loadData(this, datafile);
 		this.gui = new ReflectFrameChoices(this);
 	}
 	
@@ -19,6 +34,14 @@ public class UmlController {
 		FileIO.saveData(this, datafile, pastClasses);
 		
 		System.exit(0);
+	}
+	
+	/**
+	 * this handles generic errors to show to the user
+	 */
+	public void handleErrors(Exception error)
+	{
+		error.printStackTrace();
 	}
 	
 	public String getClassInfo(String className, boolean[] options) {
@@ -45,12 +68,6 @@ public class UmlController {
 			
 		}
 	}
-	
-	public void handleErrors(Exception error)
-	{
-		error.printStackTrace();
-	}
-	
 	
 	
 	public void start()
