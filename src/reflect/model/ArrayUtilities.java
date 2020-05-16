@@ -4,6 +4,11 @@ import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Holds code to do things with arrays like sorting
+ * @author Greg
+ *
+ */
 public class ArrayUtilities {
 	
 	
