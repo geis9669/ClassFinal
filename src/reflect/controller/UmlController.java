@@ -49,6 +49,13 @@ public class UmlController {
 		error.printStackTrace();
 	}
 	
+	public Class[] getClasses()
+	{
+		Class[] temp = new Class[pastClasses.size()];
+		pastClasses.toArray(temp);
+		return temp;
+	}
+	
 	public String getClassInfo(String className, boolean[] options) {
 		
 		try

@@ -58,11 +58,13 @@ public class ReflectPanelChoices extends JPanel {
                 updateScreen();
             }
         });
-        enterField.setSize(displayPane.getWidth(),25);
+        enterField.setSize(displayPane.getWidth()/2,25);
         enterField.setLocation(displayPane.getX(),displayPane.getY()+displayPane.getHeight()+buffer);
         this.add(enterField);
 
         this.pastClasses = new JComboBox<Class>();
+        DefaultComboBoxModel<Class> pastCModel = new DefaultComboBoxModel<Class>(controller.getClasses());
+        pastClasses.setModel(pastCModel);
         pastClasses.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent click)
         	{
@@ -70,7 +72,8 @@ public class ReflectPanelChoices extends JPanel {
         		//.getSelectedIndex()
         	}
         });
-        
+        pastClasses.setSize(enterField.getSize());
+        pastClasses.setLocation(enterField.getX()+enterField.getWidth(),enterField.getY());
         this.add(pastClasses);
         
         int boxsYPosition = enterField.getY()+enterField.getHeight()+buffer;
@@ -119,5 +122,7 @@ public class ReflectPanelChoices extends JPanel {
         String info = controller.getClassInfo(text, boxes); 
         displayArea.setText(info);
         displayArea.setCaretPosition(displayArea.getSelectionEnd());
+        DefaultComboBoxModel<Class> pastCModel = new DefaultComboBoxModel<Class>(controller.getClasses());
+        pastClasses.setModel(pastCModel);
     }
 }
