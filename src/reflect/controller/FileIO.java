@@ -4,6 +4,11 @@ import java.io.*;
 import java.time.LocalDateTime;
 import java.util.*;
 
+/**
+ * holds the code for writing and reading files.
+ * @author Greg
+ *
+ */
 public class FileIO {
 
 	/**
@@ -64,6 +69,8 @@ public class FileIO {
 	 * @param app the controller of this program
 	 * @param datafile name of the file to load
 	 * @return the object that needs to be cast could be null
+	 * @throws IOException 
+	 * @throws ClassNotFoundException 
 	 */
 	public static Object loadData(UmlController app, String datafile) throws IOException, ClassNotFoundException
 	{
