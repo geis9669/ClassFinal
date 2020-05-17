@@ -93,16 +93,11 @@ import java.lang.reflect.*;
      * @param methods the array to have the information gotten out of
      * @return a string of the gotten information
      */
-    public static String getMethods(Class cl)
-    {
-    	SortBy<Executable> sort = (a,b) -> a.getName().compareTo(b.getName()) ;
-    	SortBy<Executable> nextSort = (a,b) -> a.getParameterCount()-b.getParameterCount();
-        Method[] methods = (Method[]) ArrayUtilities.sortList(cl.getDeclaredMethods(), sort,nextSort);
-        String message = "";
-        
+	private static String formatMethods(Method[] methods) {
+		String message = "";
         for(int place = 0; place < methods.length; place++)
         {
-        	Method method = (Method) methods[place];
+        	Method method = methods[place];
             Class returnType = method.getReturnType();
             String name = method.getName();
 
