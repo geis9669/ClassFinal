@@ -1,5 +1,6 @@
 package reflect.controller;
 
+import java.awt.Component;
 import java.util.HashSet;
 import javax.swing.JOptionPane;
 import reflect.model.*;
@@ -31,7 +32,7 @@ public class UmlController {
 			String message = "Could not load pastClasses.reflect due to \n" + error.getMessage();
 			Class<?> stack = error.getClass();
 			message += "\n"+stack.getName();
-			displayMessage(message);
+			displayMessage(null,message);
 			pastClasses = new HashSet<Class>();
 		}
 		this.gui = new ReflectFrame(this);
@@ -55,7 +56,7 @@ public class UmlController {
 		String message = "An error happend \n" + error.getMessage();
 		Class<?> stack = error.getClass();
 		message += "\n"+stack.getName();
-		displayMessage(message);
+		displayMessage(gui,message);
 	}
 	
 	/**
@@ -127,7 +128,7 @@ public class UmlController {
 	
 	public void start()
 	{
-		displayMessage("TestCase \n" +getClassInfo("java.util.ArrayList", null));
+		displayMessage(null,"TestCase \n" +getClassInfo("java.util.ArrayList", null));
 	}
 	
 	/**
@@ -136,21 +137,22 @@ public class UmlController {
 	 * I don't have to look through all my code for each instance
 	 * 
 	 * show a message to the user.
+	 * @param Component where you want the popup to appear in front of null is for the screen.
 	 * @param message what you want to tell the user
 	 */
-	private void displayMessage(String message)
+	private void displayMessage(Component parentComponent,String message)
 	{
-		JOptionPane.showMessageDialog(null, message);
+		JOptionPane.showMessageDialog(parentComponent, message);
 	}
-	
 	/**
 	 * used to have only one place for when the programmer needs to
 	 * ask a question to the user
 	 * @param message the question to ask
+	 * @param Component where you want the popup to appear in front of null is for the screen.
 	 * @return what the user entered
 	 */
-	private String askQuestion(String message)
+	private String askQuestion(Component parentComponent, String message)
 	{
-		return ""+ JOptionPane.showInputDialog(null,message);
+		return ""+ JOptionPane.showInputDialog(parentComponent,message);
 	}
 }
