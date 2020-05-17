@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Holds code to do things with arrays like sorting
+ * Holds code to do things with arrays like sorting, combine them
  * @author Greg
  *
  */

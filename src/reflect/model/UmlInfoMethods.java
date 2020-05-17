@@ -2,6 +2,12 @@ package reflect.model;
 
 import java.lang.reflect.*;
 
+/**
+ * a place to leave methods getting information and formating the information
+ * for the class to return
+ * @author Greg
+ *
+ */
 public class UmlInfoMethods 
 {
 	
@@ -9,7 +15,7 @@ public class UmlInfoMethods
      * This gets info about a class and puts it in a string
      * format
      * @param classClass the class to get the info from
-     * @param options the first is for constructors, next methods, data members
+     * @param options the first is for constructors, next methods, data members, can be null
      * @return the information
      */
     public static String getClassInfo(Class classClass, boolean[] options)

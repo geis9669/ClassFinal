@@ -1,10 +1,7 @@
 package reflect.controller;
 
-import java.util.ArrayList;
 import java.util.HashSet;
-
 import javax.swing.JOptionPane;
-
 import reflect.model.*;
 import reflect.view.*;
 
