@@ -3,6 +3,8 @@ package reflect.controller;
 import java.util.ArrayList;
 import java.util.HashSet;
 
+import javax.swing.JOptionPane;
+
 import reflect.model.*;
 import reflect.view.*;
 
@@ -23,11 +25,16 @@ public class UmlController {
 	public UmlController()
 	{
 		datafile = "pastClasses.reflect";
-		try {
+		try 
+		{
 			pastClasses = (HashSet<Class>) FileIO.loadData(this, datafile);
 		}
 		catch(Exception error)
 		{
+			String message = "Could not load pastClasses.reflect due to \n" + error.getMessage();
+			Class<?> stack = error.getClass();
+			message += "\n"+stack.getName();
+			JOptionPane.showMessageDialog(null, message);
 			pastClasses = new HashSet<Class>();
 		}
 		this.gui = new ReflectFrameChoices(this);
@@ -48,7 +55,10 @@ public class UmlController {
 	 */
 	public void handleErrors(Exception error)
 	{
-		error.printStackTrace();
+		String message = "An error happend \n" + error.getMessage();
+		Class<?> stack = error.getClass();
+		message += "\n"+stack.getName();
+		JOptionPane.showMessageDialog(null, message);
 	}
 	
 	public Class[] getClasses()
@@ -68,7 +78,9 @@ public class UmlController {
 		}
 		catch(ClassNotFoundException e)
 		{
-			return "Could not find the entered class, make sure its all spelled correctly\\n";
+			String message = "Could not find the entered class, make sure its all spelled correctly\n";
+			message +="and is in the build path";
+			return message;
 		}
 	}
 	
@@ -113,6 +125,4 @@ public class UmlController {
 		System.out.println(message);
 		return "";
 	}
-	// have it be able to sort info by modifiers then name
-	// how to make code to do this
 }
