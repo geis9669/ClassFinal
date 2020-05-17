@@ -48,10 +48,11 @@ public class ReflectPanel extends JPanel {
         
         String displayText = "";
         displayText += "This program will get information about classes that can be loaded\n";
-        displayText += "An example of what to enter is java.util.Arraylist\n";
+        displayText += "An example of what to enter is java.util.ArrayList\n";
         this.displayArea = new JTextArea(displayText,20,50);
         displayArea.setWrapStyleWord(true);
-        displayArea.setEnabled(false);
+        displayArea.setEnabled(true);
+        displayArea.setEditable(false);
         displayArea.setDisabledTextColor(Color.BLACK);
         this.displayPane = new JScrollPane();
         displayPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
