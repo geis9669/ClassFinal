@@ -2,6 +2,9 @@ package reflect.model;
 
 import java.lang.reflect.*;
 
+public class UmlInfoMethods 
+{
+	
     /**
      * This gets info about a class and puts it in a string
      * format
