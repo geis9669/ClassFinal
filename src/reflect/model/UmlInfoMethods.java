@@ -3,10 +3,11 @@ package reflect.model;
 import java.lang.reflect.*;
 
     /**
-     *
-     * @param className
+     * This gets info about a class and puts it in a string
+     * format
+     * @param classClass the class to get the info from
      * @param options the first is for constructors, next methods, data members
-     * @return
+     * @return the information
      */
     public static String getClassInfo(String className, boolean[] options)
     {
@@ -53,11 +54,11 @@ import java.lang.reflect.*;
         return classInfo;
     }
 
-
     /**
-     *
-     * @param cl a class
-     * @return all the constructors as a string from the class cl
+     * takes a Array of Constructors and makes a string of them
+     * It places one item on each line
+     * @param Constructors the array to have the information gotten out of
+     * @return a string of the gotten information
      */
     public static String getConstructors(Class cl)
     {
@@ -86,9 +87,10 @@ import java.lang.reflect.*;
     }
 
     /**
-     * makes a String of all the methods of a class
-     * @param cl a class
-     * @return the String of methods
+     * takes a Array of Methods and makes a string of them
+     * It places one item on each line
+     * @param methods the array to have the information gotten out of
+     * @return a string of the gotten information
      */
     public static String getMethods(Class cl)
     {
@@ -117,12 +119,13 @@ import java.lang.reflect.*;
             message+=");\n";
         }
         return message;
-    }
-
+	}
+    
     /**
-     *
-     * @param cl a class
-     * @return the fields of a class
+     * takes a Array of fields and makes a string of them
+     * It places one item on each line
+     * @param fields the array to have the information gotten out of
+     * @return a string of the gotten information
      */
     public static String getFields(Class cl)
     {
