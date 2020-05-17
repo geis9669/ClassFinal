@@ -3,8 +3,6 @@ package reflect.controller;
 import java.util.ArrayList;
 import java.util.HashSet;
 
-import javax.swing.JOptionPane;
-
 import reflect.model.*;
 import reflect.view.*;
 
@@ -63,6 +61,10 @@ public class UmlController {
 		displayMessage(message);
 	}
 	
+	/**
+	 * gets the classes that have been loaded before
+	 * @return an array of classes that are loaded
+	 */
 	public Class[] getClasses()
 	{
 		Class[] temp = new Class[pastClasses.size()];
@@ -70,6 +72,13 @@ public class UmlController {
 		return temp;
 	}
 	
+	/**
+	 * this is used to load a string that might be a reference to a class
+	 * @param className a string that is the class to be loaded
+	 * example java.util.ArrayList
+	 * @param options the first is for constructors, next methods, lastly datamembers
+	 * @return a string with all the information or an error message
+	 */
 	public String getClassInfo(String className, boolean[] options) 
 	{
 		try
@@ -86,6 +95,12 @@ public class UmlController {
 		}
 	}
 	
+	/**
+	 * this is used if the class has already been loaded to get its information
+	 * @param classClass the class you want information about
+	 * @param options the first is for constructors, next methods, lastly datamembers
+	 * @return a string with all the information
+	 */
 	public String getClassInfoList(Class classClass, boolean[] options)
 	{
 		return UmlInfoMethods.getClassInfo(classClass, options);
