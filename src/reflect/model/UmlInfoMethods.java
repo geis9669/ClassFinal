@@ -32,11 +32,27 @@ public class UmlInfoMethods
 
             Class supercl = classClass.getSuperclass();
             classInfo = ("class " + classClass);
-            if(supercl != null && supercl != Object.class)
+            if(supercl != null )
             {
                 classInfo += (" extends " + supercl.getName());
-                //classInfo += "\n" +getClassInfo(supercl.getName());
             }
+            
+            classInfo += "\n";
+            Class[] interfaces= classClass.getInterfaces();
+            if(interfaces.length > 0)
+            {
+            	classInfo += "implements" ;
+            	for(int index = 0; index<interfaces.length; index++)
+            	{
+            		if(index%2==0)
+            		{
+            			classInfo+="\n";
+            		}
+            		Class implemted = interfaces[index];
+            		classInfo+=implemted.getName()+"  ";
+            	}
+            }
+            
             classInfo += "\n{\n";
             if(options[0]) 
             {
