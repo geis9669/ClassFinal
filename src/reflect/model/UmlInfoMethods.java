@@ -31,7 +31,7 @@ public class UmlInfoMethods
         }
 
             Class supercl = classClass.getSuperclass();
-            classInfo = ("class " + classClass);
+            classInfo = ""+ classClass;
             if(supercl != null )
             {
                 classInfo += (" extends " + supercl.getName());
