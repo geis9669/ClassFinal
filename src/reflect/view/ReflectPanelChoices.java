@@ -70,6 +70,10 @@ public class ReflectPanelChoices extends JPanel {
         	{
         		//.getSelectedItem() 
         		//.getSelectedIndex()
+        		boolean[] boxes = {constructorsBox.isSelected(), methodsBox.isSelected(), dataMembersBox.isSelected()};
+        		String info = controller.getClassInfoList(pastClasses.getSelectedIndex(),boxes);
+        		displayArea.setText(info);
+                displayArea.setCaretPosition(displayArea.getSelectionEnd());
         	}
         });
         pastClasses.setSize(enterField.getSize());
@@ -119,7 +123,7 @@ public class ReflectPanelChoices extends JPanel {
         String text = enterField.getText();
         boolean[] boxes = {constructorsBox.isSelected(), methodsBox.isSelected(), dataMembersBox.isSelected()};
 
-        String info = controller.getClassInfo(text, boxes); 
+        String info = controller.getClassInfo(text, boxes);
         displayArea.setText(info);
         displayArea.setCaretPosition(displayArea.getSelectionEnd());
         DefaultComboBoxModel<Class> pastCModel = new DefaultComboBoxModel<Class>(controller.getClasses());

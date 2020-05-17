@@ -70,6 +70,11 @@ public class UmlController {
 		}
 	}
 	
+	public String getClassInfoList(int classindex, boolean[] options)
+	{
+		return UmlInfoMethods.getClassInfo(pastClasses.get(classindex), options);
+	}
+	
 	public void something()
 	{
 		String className = "java.util.ArrayList";
