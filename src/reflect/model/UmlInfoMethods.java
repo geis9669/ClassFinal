@@ -61,15 +61,12 @@ import java.lang.reflect.*;
      * @param Constructors the array to have the information gotten out of
      * @return a string of the gotten information
      */
-    public static String getConstructors(Class cl)
-    {
-    	SortBy<Executable> sort = (a,b) -> a.getParameterCount()-b.getParameterCount();
-        Object[] constructors = (Object[]) ArrayUtilities.sortList(cl.getDeclaredConstructors(),sort);
-        String message = "";
+	private static String formatConstructors(Constructor[] constructors) {
+		String message = "";
 
         for(int place = 0; place < constructors.length; place++)
         {
-            Constructor thisClass = (Constructor) constructors[place];
+            Constructor thisClass = constructors[place];
 
             String name = thisClass.getName();
             message += "    "+ Modifier.toString(thisClass.getModifiers());
@@ -85,7 +82,7 @@ import java.lang.reflect.*;
             message += ");\n";
         }
         return message;
-    }
+	}
 
     /**
      * takes a Array of Methods and makes a string of them
