@@ -128,29 +128,12 @@ import java.lang.reflect.*;
      * @param fields the array to have the information gotten out of
      * @return a string of the gotten information
      */
-    public static String getFields(Class cl)
-    {
-    	SortBy<Field> sort = (a,b) -> a.getName().compareTo(b.getName());
-        Field[] fields = (Field[]) ArrayUtilities.sortList(cl.getDeclaredFields(),sort);
-        String message = "";
-
-        for(int place = 0; place < fields.length; place++)
-        {
-        	Field f = (Field) fields[place];
-            Class type = f.getType();
-            String name = f.getName();
-            message += "    " + Modifier.toString(f.getModifiers());
-            message += " " + type.getName()+ " " + name+ ";\n";
-        }
-        return message;
-    }
-    
-    public static String formatsFields(Field[] fields)
+    public static String formatFields(Field[] fields)
     {
     	String message = "";
     	for(int place = 0; place < fields.length; place++)
         {
-        	Field f = (Field) fields[place];
+        	Field f = fields[place];
             Class type = f.getType();
             String name = f.getName();
             message += "    " + Modifier.toString(f.getModifiers());
