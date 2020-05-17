@@ -2,46 +2,23 @@ package reflect.model;
 
 import java.lang.reflect.*;
 
-public class UmlInfoMethods {
-
-    public static String getClassInfo(String className)
-    {
-        String classInfo = "";
-
-        try
-        {
-            Class cl = Class.forName(className);
-            Class supercl = cl.getSuperclass();
-            classInfo = ("class " + className);
-            if(supercl != null && supercl != Object.class)
-            {
-                classInfo += (" extends " + supercl.getName());
-                //classInfo += "\n" +getClassInfo(supercl.getName());
-            }
-            classInfo += "\n{\n";
-            classInfo += getConstructors(cl);
-            classInfo += "\n";
-            classInfo += getMethods(cl);
-            classInfo += "\n";
-            classInfo += getFields(cl);
-            classInfo += "}"+"\n";
-        }
-        catch(ClassNotFoundException exception)
-        {
-            return "could not find the entered class, make sure its all spelled correctly\n";
-//            exception.printStackTrace();
-        }
-
-        return classInfo;
-    }
-
+/**
+ * a place to leave methods getting information and formating the information
+ * for the class to return
+ * @author Greg
+ *
+ */
+public class UmlInfoMethods 
+{
+	
     /**
-     *
-     * @param className
-     * @param options the first is for constructors, next methods, data members
-     * @return
+     * This gets info about a class and puts it in a string
+     * format
+     * @param classClass the class to get the info from
+     * @param options the first is for constructors, next methods, data members, can be null
+     * @return the information
      */
-    public static String getClassInfo(String className, boolean[] options)
+    public static String getClassInfo(Class classClass, boolean[] options)
     {
         String classInfo = "";
         if(options == null || options.length != 3)
@@ -53,54 +30,52 @@ public class UmlInfoMethods {
             }
         }
 
-        try
-        {
-            Class cl = Class.forName(className);
-            Class supercl = cl.getSuperclass();
-            classInfo = ("class " + className);
+            Class supercl = classClass.getSuperclass();
+            classInfo = ("class " + classClass);
             if(supercl != null && supercl != Object.class)
             {
                 classInfo += (" extends " + supercl.getName());
                 //classInfo += "\n" +getClassInfo(supercl.getName());
             }
             classInfo += "\n{\n";
-            if(options[0]) {
-                classInfo += getConstructors(cl);
+            if(options[0]) 
+            {
+            	SortBy<Executable> sort = (a,b) -> a.getParameterCount()-b.getParameterCount();
+            	Constructor[] constructors = (Constructor[]) ArrayUtilities.sortList(classClass.getDeclaredConstructors(),sort);
+                classInfo += formatConstructors(constructors);
             }
             classInfo += "\n";
-            if(options[1]) {
-                classInfo += getMethods(cl);
+            if(options[1]) 
+            {
+            	SortBy<Executable> sortm = (a,b) -> a.getName().compareTo(b.getName()) ;
+            	SortBy<Executable> nextSortm2 = (a,b) -> a.getParameterCount()-b.getParameterCount();
+                Method[] methods = (Method[]) ArrayUtilities.sortList(classClass.getDeclaredMethods(), sortm,nextSortm2);
+                classInfo += formatMethods(methods);
             }
             classInfo += "\n";
-            if(options[2]){
-                classInfo += getFields(cl);
+            if(options[2])
+            {
+            	SortBy<Field> sort = (a,b) -> a.getName().compareTo(b.getName());
+                Field[] fields = (Field[]) ArrayUtilities.sortList(classClass.getDeclaredFields(),sort);
+                classInfo += formatFields(fields);
             }
             classInfo += "}"+"\n";
-        }
-        catch(ClassNotFoundException exception)
-        {
-            return "could not find the entered class, make sure its all spelled correctly\n";
-//            exception.printStackTrace();
-        }
-
+            
         return classInfo;
     }
 
-
     /**
-     *
-     * @param cl a class
-     * @return all the constructors as a string from the class cl
+     * takes a Array of Constructors and makes a string of them
+     * It places one item on each line
+     * @param Constructors the array to have the information gotten out of
+     * @return a string of the gotten information
      */
-    public static String getConstructors(Class cl)
-    {
-    	SortBy<Executable> sort = (a,b) -> a.getParameterCount()-b.getParameterCount();
-        Object[] constructors = (Object[]) ArrayUtilities.sortList(cl.getDeclaredConstructors(),sort);
-        String message = "";
+	private static String formatConstructors(Constructor[] constructors) {
+		String message = "";
 
         for(int place = 0; place < constructors.length; place++)
         {
-            Constructor thisClass = (Constructor) constructors[place];
+            Constructor thisClass = constructors[place];
 
             String name = thisClass.getName();
             message += "    "+ Modifier.toString(thisClass.getModifiers());
@@ -116,23 +91,19 @@ public class UmlInfoMethods {
             message += ");\n";
         }
         return message;
-    }
+	}
 
     /**
-     * makes a String of all the methods of a class
-     * @param cl a class
-     * @return the String of methods
+     * takes a Array of Methods and makes a string of them
+     * It places one item on each line
+     * @param methods the array to have the information gotten out of
+     * @return a string of the gotten information
      */
-    public static String getMethods(Class cl)
-    {
-    	SortBy<Executable> sort = (a,b) -> a.getName().compareTo(b.getName()) ;
-    	SortBy<Executable> nextSort = (a,b) -> a.getParameterCount()-b.getParameterCount();
-        Method[] methods = (Method[]) ArrayUtilities.sortList(cl.getDeclaredMethods(), sort,nextSort);
-        String message = "";
-        
+	private static String formatMethods(Method[] methods) {
+		String message = "";
         for(int place = 0; place < methods.length; place++)
         {
-        	Method method = (Method) methods[place];
+        	Method method = methods[place];
             Class returnType = method.getReturnType();
             String name = method.getName();
 
@@ -150,28 +121,26 @@ public class UmlInfoMethods {
             message+=");\n";
         }
         return message;
-    }
-
+	}
+    
     /**
-     *
-     * @param cl a class
-     * @return the fields of a class
+     * takes a Array of fields and makes a string of them
+     * It places one item on each line
+     * @param fields the array to have the information gotten out of
+     * @return a string of the gotten information
      */
-    public static String getFields(Class cl)
+    public static String formatFields(Field[] fields)
     {
-    	SortBy<Field> sort = (a,b) -> a.getName().compareTo(b.getName());
-        Field[] fields = (Field[]) ArrayUtilities.sortList(cl.getDeclaredFields(),sort);
-        String message = "";
-
-        for(int place = 0; place < fields.length; place++)
+    	String message = "";
+    	for(int place = 0; place < fields.length; place++)
         {
-        	Field f = (Field) fields[place];
+        	Field f = fields[place];
             Class type = f.getType();
             String name = f.getName();
             message += "    " + Modifier.toString(f.getModifiers());
             message += " " + type.getName()+ " " + name+ ";\n";
         }
-        return message;
+    	return message;
     }
 
 }

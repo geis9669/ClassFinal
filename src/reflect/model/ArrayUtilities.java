@@ -4,6 +4,11 @@ import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Holds code to do things with arrays like sorting, combine them
+ * @author Greg
+ *
+ */
 public class ArrayUtilities {
 	
 	
@@ -13,7 +18,7 @@ public class ArrayUtilities {
      * @param list the list to be sorted
      * @param firstSort the first sort to be applied to the list
      * @param innerSorts sort by first sort then by inner going one deeper for each time they are the same
-     * @return the sorted list as an ObjectArray
+     * @return the sorted list as an ObjectArray cast it to what it was entered as
      */
     public static <T> T[] sortList(T[] list, SortBy<T> firstSort, SortBy<T>... innerSorts)
     {
@@ -31,7 +36,7 @@ public class ArrayUtilities {
      * @param <T> the type of array to be sorted
      * @param array the array to be sorted
      * @param sorts sorts by first item in sorts then by inner going one deeper for each time they are the same
-     * @return the sorted list as an ObjectArray
+     * @return the sorted list as an ObjectArray cast it to what it was entered as
      */
     public static <T> T[] sortList(T[] array, SortBy<T>[] sorts)
     {
