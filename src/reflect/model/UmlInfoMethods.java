@@ -2,39 +2,6 @@ package reflect.model;
 
 import java.lang.reflect.*;
 
-public class UmlInfoMethods {
-
-    public static String getClassInfo(String className)
-    {
-        String classInfo = "";
-
-        try
-        {
-            Class cl = Class.forName(className);
-            Class supercl = cl.getSuperclass();
-            classInfo = ("class " + className);
-            if(supercl != null && supercl != Object.class)
-            {
-                classInfo += (" extends " + supercl.getName());
-                //classInfo += "\n" +getClassInfo(supercl.getName());
-            }
-            classInfo += "\n{\n";
-            classInfo += getConstructors(cl);
-            classInfo += "\n";
-            classInfo += getMethods(cl);
-            classInfo += "\n";
-            classInfo += getFields(cl);
-            classInfo += "}"+"\n";
-        }
-        catch(ClassNotFoundException exception)
-        {
-            return "could not find the entered class, make sure its all spelled correctly\n";
-//            exception.printStackTrace();
-        }
-
-        return classInfo;
-    }
-
     /**
      *
      * @param className
