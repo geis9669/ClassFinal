@@ -9,7 +9,7 @@ import java.lang.reflect.*;
      * @param options the first is for constructors, next methods, data members
      * @return the information
      */
-    public static String getClassInfo(String className, boolean[] options)
+    public static String getClassInfo(Class classClass, boolean[] options)
     {
         String classInfo = "";
         if(options == null || options.length != 3)
@@ -21,36 +21,37 @@ import java.lang.reflect.*;
             }
         }
 
-        try
-        {
-            Class cl = Class.forName(className);
-            Class supercl = cl.getSuperclass();
-            classInfo = ("class " + className);
+            Class supercl = classClass.getSuperclass();
+            classInfo = ("class " + classClass);
             if(supercl != null && supercl != Object.class)
             {
                 classInfo += (" extends " + supercl.getName());
                 //classInfo += "\n" +getClassInfo(supercl.getName());
             }
             classInfo += "\n{\n";
-            if(options[0]) {
-                classInfo += getConstructors(cl);
+            if(options[0]) 
+            {
+            	SortBy<Executable> sort = (a,b) -> a.getParameterCount()-b.getParameterCount();
+            	Constructor[] constructors = (Constructor[]) ArrayUtilities.sortList(classClass.getDeclaredConstructors(),sort);
+                classInfo += formatConstructors(constructors);
             }
             classInfo += "\n";
-            if(options[1]) {
-                classInfo += getMethods(cl);
+            if(options[1]) 
+            {
+            	SortBy<Executable> sortm = (a,b) -> a.getName().compareTo(b.getName()) ;
+            	SortBy<Executable> nextSortm2 = (a,b) -> a.getParameterCount()-b.getParameterCount();
+                Method[] methods = (Method[]) ArrayUtilities.sortList(classClass.getDeclaredMethods(), sortm,nextSortm2);
+                classInfo += formatMethods(methods);
             }
             classInfo += "\n";
-            if(options[2]){
-                classInfo += getFields(cl);
+            if(options[2])
+            {
+            	SortBy<Field> sort = (a,b) -> a.getName().compareTo(b.getName());
+                Field[] fields = (Field[]) ArrayUtilities.sortList(classClass.getDeclaredFields(),sort);
+                classInfo += formatFields(fields);
             }
             classInfo += "}"+"\n";
-        }
-        catch(ClassNotFoundException exception)
-        {
-            return "could not find the entered class, make sure its all spelled correctly\n";
-//            exception.printStackTrace();
-        }
-
+            
         return classInfo;
     }
 

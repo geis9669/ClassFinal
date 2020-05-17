@@ -56,19 +56,18 @@ public class UmlController {
 		return temp;
 	}
 	
-	public String getClassInfo(String className, boolean[] options) {
-		
+	public String getClassInfo(String className, boolean[] options) 
+	{
 		try
 		{
 			Class cl = Class.forName(className);
 			pastClasses.add(cl);
+			return UmlInfoMethods.getClassInfo(cl, options);
 		}
 		catch(ClassNotFoundException e)
 		{
-			
+			return "Could not find the entered class, make sure its all spelled correctly\\n";
 		}
-		
-		return UmlInfoMethods.getClassInfo(className, options);
 	}
 	
 	public void something()
