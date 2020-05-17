@@ -104,33 +104,6 @@ public class UmlController {
 		return UmlInfoMethods.getClassInfo(classClass, options);
 	}
 	
-	public void something()
-	{
-		String className = "java.util.ArrayList";
-		String[] includeWords;// has to have this some where in it
-		String[] excludeWords;// can't have this some where in it
-		SortBy[] sorts ; // how to sort the lists
-		
-		boolean[] modifiers; // public, static , final, none
-		
-		String[] returnType; 
-		
-		try
-		{
-			
-		}
-		catch(Exception e)
-		{
-			
-		}
-	}
-	
-	
-	public void start()
-	{
-		displayMessage(null,"TestCase \n" +getClassInfo("java.util.ArrayList", null));
-	}
-	
 	/**
 	 * used to have only one place for when the programmer needs to
 	 * show information to the user so if I change from popup
