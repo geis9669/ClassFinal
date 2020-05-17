@@ -18,12 +18,14 @@ public class UmlController {
 	private HashSet<Class> pastClasses;
 	
 	private ReflectFrameChoices gui;
+	private Popup popup;
 	
 	/**
 	 * sets up the entire application
 	 */
 	public UmlController()
 	{
+		popup = new Popup();
 		datafile = "pastClasses.reflect";
 		try 
 		{
@@ -34,7 +36,7 @@ public class UmlController {
 			String message = "Could not load pastClasses.reflect due to \n" + error.getMessage();
 			Class<?> stack = error.getClass();
 			message += "\n"+stack.getName();
-			JOptionPane.showMessageDialog(null, message);
+			displayMessage(message);
 			pastClasses = new HashSet<Class>();
 		}
 		this.gui = new ReflectFrameChoices(this);
@@ -58,7 +60,7 @@ public class UmlController {
 		String message = "An error happend \n" + error.getMessage();
 		Class<?> stack = error.getClass();
 		message += "\n"+stack.getName();
-		JOptionPane.showMessageDialog(null, message);
+		displayMessage(message);
 	}
 	
 	public Class[] getClasses()
@@ -113,16 +115,30 @@ public class UmlController {
 	
 	public void start()
 	{
-		displayMessage(getClassInfo("java.util.ArrayList", null));
+		displayMessage("TestCase \n" +getClassInfo("java.util.ArrayList", null));
 	}
 	
+	/**
+	 * used to have only one place for when the programmer needs to
+	 * show information to the user so if I change from popup
+	 * I don't have to look through all my code for each instance
+	 * 
+	 * show a message to the user.
+	 * @param message what you want to tell the user
+	 */
 	private void displayMessage(String message)
 	{
-		System.out.println(message);
+		popup.displayMessage(message);
 	}
+	
+	/**
+	 * used to have only one place for when the programmer needs to
+	 * ask a question to the user
+	 * @param message the question to ask
+	 * @return what the user entered
+	 */
 	private String askQuestion(String message)
 	{
-		System.out.println(message);
-		return "";
+		return popup.askQuestion(message);
 	}
 }
