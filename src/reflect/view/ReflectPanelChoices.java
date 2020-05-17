@@ -68,10 +68,9 @@ public class ReflectPanelChoices extends JPanel {
         pastClasses.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent click)
         	{
-        		//.getSelectedItem() 
-        		//.getSelectedIndex()
         		boolean[] boxes = {constructorsBox.isSelected(), methodsBox.isSelected(), dataMembersBox.isSelected()};
-        		String info = controller.getClassInfoList(pastClasses.getSelectedIndex(),boxes);
+        		Class cl =(Class) pastClasses.getSelectedItem();
+        		String info = controller.getClassInfoList(cl,boxes);
         		displayArea.setText(info);
                 displayArea.setCaretPosition(displayArea.getSelectionEnd());
         	}

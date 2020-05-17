@@ -1,6 +1,8 @@
 package reflect.controller;
 
 import java.util.ArrayList;
+import java.util.HashSet;
+
 import reflect.model.*;
 import reflect.view.*;
 
@@ -11,7 +13,7 @@ import reflect.view.*;
  */
 public class UmlController {
 	private String datafile;
-	private ArrayList<Class> pastClasses;
+	private HashSet<Class> pastClasses;
 	
 	private ReflectFrameChoices gui;
 	
@@ -22,11 +24,11 @@ public class UmlController {
 	{
 		datafile = "pastClasses.reflect";
 		try {
-			pastClasses = (ArrayList<Class>) FileIO.loadData(this, datafile);
+			pastClasses = (HashSet<Class>) FileIO.loadData(this, datafile);
 		}
 		catch(Exception error)
 		{
-			pastClasses = new ArrayList<Class>();
+			pastClasses = new HashSet<Class>();
 		}
 		this.gui = new ReflectFrameChoices(this);
 	}
@@ -70,9 +72,9 @@ public class UmlController {
 		}
 	}
 	
-	public String getClassInfoList(int classindex, boolean[] options)
+	public String getClassInfoList(Class classClass, boolean[] options)
 	{
-		return UmlInfoMethods.getClassInfo(pastClasses.get(classindex), options);
+		return UmlInfoMethods.getClassInfo(classClass, options);
 	}
 	
 	public void something()
