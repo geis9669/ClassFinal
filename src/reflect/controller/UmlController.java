@@ -3,6 +3,8 @@ package reflect.controller;
 import java.util.ArrayList;
 import java.util.HashSet;
 
+import javax.swing.JOptionPane;
+
 import reflect.model.*;
 import reflect.view.*;
 
@@ -16,14 +18,12 @@ public class UmlController {
 	private HashSet<Class> pastClasses;
 	
 	private ReflectFrameChoices gui;
-	private Popup popup;
 	
 	/**
 	 * sets up the entire application
 	 */
 	public UmlController()
 	{
-		popup = new Popup();
 		datafile = "pastClasses.reflect";
 		try 
 		{
@@ -143,7 +143,7 @@ public class UmlController {
 	 */
 	private void displayMessage(String message)
 	{
-		popup.displayMessage(message);
+		JOptionPane.showMessageDialog(null, message);
 	}
 	
 	/**
@@ -154,6 +154,6 @@ public class UmlController {
 	 */
 	private String askQuestion(String message)
 	{
-		return popup.askQuestion(message);
+		return ""+ JOptionPane.showInputDialog(null,message);
 	}
 }
