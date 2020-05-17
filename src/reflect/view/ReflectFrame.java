@@ -5,16 +5,26 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 
-public class ReflectFrameChoices extends JFrame
+/**
+ * the frame for the gui
+ * @author Greg
+ *
+ */
+public class ReflectFrame extends JFrame
 {
+
 	private UmlController app;
     private JPanel panel;
     
-    public ReflectFrameChoices(UmlController controller)
+    /**
+     * sets up the frame
+     * @param controller the controller of the program
+     */
+    public ReflectFrame(UmlController controller)
     {
         super();
         this.app = controller;
-        this.panel = new ReflectPanelChoices(controller);
+        this.panel = new ReflectPanel(controller);
         
         this.setContentPane(panel);
         this.setTitle("Reflection");
@@ -28,7 +38,6 @@ public class ReflectFrameChoices extends JFrame
         		app.closeApplication();
         	}
         });
-        //this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         this.setVisible(true);
     }

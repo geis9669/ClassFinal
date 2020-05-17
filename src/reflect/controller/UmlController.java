@@ -14,7 +14,7 @@ public class UmlController {
 	private String datafile;
 	private HashSet<Class> pastClasses;
 	
-	private ReflectFrameChoices gui;
+	private ReflectFrame gui;
 	
 	/**
 	 * sets up the entire application
@@ -34,7 +34,7 @@ public class UmlController {
 			displayMessage(message);
 			pastClasses = new HashSet<Class>();
 		}
-		this.gui = new ReflectFrameChoices(this);
+		this.gui = new ReflectFrame(this);
 	}
 	
 	/**

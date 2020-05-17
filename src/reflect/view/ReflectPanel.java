@@ -12,7 +12,7 @@ import java.io.File;
  * @author Greg
  *
  */
-public class ReflectPanelChoices extends JPanel {
+public class ReflectPanel extends JPanel {
 
 	private UmlController controller;
 	
@@ -35,7 +35,7 @@ public class ReflectPanelChoices extends JPanel {
      * makes all the user interface components so a user can use the program
      * @param controller the controller of the application to get information from
      */
-    public ReflectPanelChoices(UmlController controller)
+    public ReflectPanel(UmlController controller)
     {
         super();
         this.controller = controller;
@@ -45,10 +45,10 @@ public class ReflectPanelChoices extends JPanel {
         this.setPreferredSize(new Dimension(800, 600));
         this.setSize(800, 600);
         
+        
         String displayText = "";
         displayText += "This program will get information about classes that can be loaded\n";
         displayText += "An example of what to enter is java.util.Arraylist\n";
-        
         this.displayArea = new JTextArea(displayText,20,50);
         displayArea.setWrapStyleWord(true);
         displayArea.setEnabled(false);
@@ -76,6 +76,7 @@ public class ReflectPanelChoices extends JPanel {
         enterField.setLocation(displayPane.getX(),displayPane.getY()+displayPane.getHeight()+buffer);
         this.add(enterField);
 
+        
         this.pastClasses = new JComboBox<Class>();
         DefaultComboBoxModel<Class> pastCModel = new DefaultComboBoxModel<Class>(controller.getClasses());
         pastClasses.setModel(pastCModel);
@@ -92,6 +93,7 @@ public class ReflectPanelChoices extends JPanel {
         pastClasses.setSize(enterField.getSize());
         pastClasses.setLocation(enterField.getX()+enterField.getWidth(),enterField.getY());
         this.add(pastClasses);
+        
         
         int boxsYPosition = enterField.getY()+enterField.getHeight()+buffer;
         int boxXPosition = displayPane.getX();
@@ -125,6 +127,7 @@ public class ReflectPanelChoices extends JPanel {
         submitButton.setLocation(displayPane.getX(), boxsYPosition+boxHeight*4);
         submitButton.setSize(170,25);
         this.add(submitButton);
+        
         
         this.saveButton = new JButton ("Click to save the text in view");
         saveButton.addActionListener(new ActionListener() 
