@@ -27,7 +27,8 @@ public class FileIO {
 		filename += " umlInfo.txt";
 		File saveFile = new File(filename);
 		
-		try(Scanner textScanner = new Scanner(textToSave); PrintWriter saveText = new PrintWriter(saveFile))
+		try(Scanner textScanner = new Scanner(textToSave); 
+				PrintWriter saveText = new PrintWriter(saveFile))
 		{
 			while (textScanner.hasNext())
 			{
